@@ -3,7 +3,6 @@ name: 📊 Update Profile Statistics
 on:
   schedule:
     - cron: "0 3 * * *"
-    
   workflow_dispatch:
 
 permissions:
@@ -17,49 +16,56 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: 📈 Generate GitHub Stats
-        uses: stats-organization/github-readme-stats-action@v2
-        with:
-          card: stats
-          options: username=ByAruDev&show_icons=true&theme=transparent&hide_border=true&rank_icon=github
-          path: profile/stats.svg
+      - name: 📁 Create profile directory
+        run: mkdir -p profile
 
+      - name: 📈 Generate GitHub Stats
+        run: |
+          curl -fL \
+            "https://github-readme-stats.vercel.app/api?username=ByAruDev&show_icons=true&theme=transparent&hide_border=true&rank_icon=github" \
+            -o profile/stats.svg
+
+          grep -q "<svg" profile/stats.svg || {
+            echo "GitHub Stats did not return valid SVG"
+            cat profile/stats.svg
+            exit 1
+          }
 
       - name: 💻 Generate Top Languages
-        uses: stats-organization/github-readme-stats-action@v2
-        with:
-          card: top-langs
-          options: username=ByAruDev&layout=donut&theme=transparent&hide_border=true&langs_count=8
-          path: profile/top-langs.svg
+        run: |
+          curl -fL \
+            "https://github-readme-stats.vercel.app/api/top-langs/?username=ByAruDev&layout=donut&theme=transparent&hide_border=true&langs_count=8" \
+            -o profile/top-langs.svg
 
+          grep -q "<svg" profile/top-langs.svg || {
+            echo "Top Languages did not return valid SVG"
+            cat profile/top-langs.svg
+            exit 1
+          }
 
       - name: 🔥 Generate Streak Stats
-        uses: DenverCoder1/github-readme-streak-stats@main
-        with:
-          options: user=ByAruDev&theme=transparent&hide_border=true&disable_animations=true
-          path: profile/streak.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -fL \
+            "https://streak-stats.demolab.com?user=ByAruDev&theme=transparent&hide_border=true&disable_animations=true" \
+            -o profile/streak.svg
 
+          grep -q "<svg" profile/streak.svg || {
+            echo "Streak Stats did not return valid SVG"
+            cat profile/streak.svg
+            exit 1
+          }
 
       - name: 🏆 Generate GitHub Trophies
         run: |
-          curl -L \
+          curl -fL \
             "https://github-profile-trophy.vercel.app/?username=ByAruDev&theme=darkhub&no-frame=true&margin-w=10&row=1" \
-            -o /tmp/trophies.svg
+            -o profile/trophies.svg
 
-          # Make sure we actually received SVG
-          if ! grep -q "<svg" /tmp/trophies.svg; then
-            echo "Trophy generator did not return valid SVG"
-            cat /tmp/trophies.svg
+          grep -q "<svg" profile/trophies.svg || {
+            echo "GitHub Trophy generator did not return valid SVG"
+            cat profile/trophies.svg
             exit 1
-          fi
-
-          # Remove potentially problematic XML declarations/doctype
-          sed -i '/<\?xml/d' /tmp/trophies.svg
-          sed -i '/<!DOCTYPE/d' /tmp/trophies.svg
-
-          cp /tmp/trophies.svg profile/trophies.svg
-          
+          }
 
       - name: 💾 Commit generated statistics
         run: |
