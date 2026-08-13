@@ -21,57 +21,36 @@ jobs:
 
       - name: 📈 Generate GitHub Stats
         run: |
-          curl -fL \
+          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
             "https://github-readme-stats.vercel.app/api?username=ByAruDev&show_icons=true&theme=transparent&hide_border=true&rank_icon=github" \
             -o profile/stats.svg
-
-          grep -q "<svg" profile/stats.svg || {
-            echo "GitHub Stats did not return valid SVG"
-            cat profile/stats.svg
-            exit 1
-          }
+          grep -q "<svg" profile/stats.svg
 
       - name: 💻 Generate Top Languages
         run: |
-          curl -fL \
+          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
             "https://github-readme-stats.vercel.app/api/top-langs/?username=ByAruDev&layout=donut&theme=transparent&hide_border=true&langs_count=8" \
             -o profile/top-langs.svg
-
-          grep -q "<svg" profile/top-langs.svg || {
-            echo "Top Languages did not return valid SVG"
-            cat profile/top-langs.svg
-            exit 1
-          }
+          grep -q "<svg" profile/top-langs.svg
 
       - name: 🔥 Generate Streak Stats
         run: |
-          curl -fL \
+          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
             "https://streak-stats.demolab.com?user=ByAruDev&theme=transparent&hide_border=true&disable_animations=true" \
             -o profile/streak.svg
-
-          grep -q "<svg" profile/streak.svg || {
-            echo "Streak Stats did not return valid SVG"
-            cat profile/streak.svg
-            exit 1
-          }
+          grep -q "<svg" profile/streak.svg
 
       - name: 🏆 Generate GitHub Trophies
         run: |
-          curl -fL \
+          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
             "https://github-profile-trophy.vercel.app/?username=ByAruDev&theme=darkhub&no-frame=true&margin-w=10&row=1" \
             -o profile/trophies.svg
-
-          grep -q "<svg" profile/trophies.svg || {
-            echo "GitHub Trophy generator did not return valid SVG"
-            cat profile/trophies.svg
-            exit 1
-          }
+          grep -q "<svg" profile/trophies.svg
 
       - name: 💾 Commit generated statistics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add profile/*.svg
 
           if git diff --cached --quiet; then
