@@ -20,37 +20,83 @@ jobs:
         run: mkdir -p profile
 
       - name: 📈 Generate GitHub Stats
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
-            "https://github-readme-stats.vercel.app/api?username=ByAruDev&show_icons=true&theme=transparent&hide_border=true&rank_icon=github" \
-            -o profile/stats.svg
-          grep -q "<svg" profile/stats.svg
+          DATA=$(curl -sL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/users/ByAruDev")
+
+          FOLLOWERS=$(echo "$DATA" | jq -r '.followers')
+          REPOS=$(echo "$DATA" | jq -r '.public_repos')
+
+          cat > profile/stats.svg <<EOF
+          <svg xmlns="http://www.w3.org/2000/svg" width="495" height="220" viewBox="0 0 495 220">
+            <rect width="495" height="220" rx="12" fill="#0d1117"/>
+            <text x="30" y="42" fill="#58a6ff" font-family="Arial" font-size="22" font-weight="bold">ByAruDev</text>
+            <text x="30" y="68" fill="#8b949e" font-family="Arial" font-size="14">GitHub Statistics</text>
+            <text x="30" y="110" fill="#c9d1d9" font-family="Arial" font-size="14">Followers</text>
+            <text x="30" y="137" fill="#58a6ff" font-family="Arial" font-size="22" font-weight="bold">$FOLLOWERS</text>
+            <text x="220" y="110" fill="#c9d1d9" font-family="Arial" font-size="14">Repositories</text>
+            <text x="220" y="137" fill="#58a6ff" font-family="Arial" font-size="22" font-weight="bold">$REPOS</text>
+          </svg>
+          EOF
 
       - name: 💻 Generate Top Languages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
-            "https://github-readme-stats.vercel.app/api/top-langs/?username=ByAruDev&layout=donut&theme=transparent&hide_border=true&langs_count=8" \
-            -o profile/top-langs.svg
-          grep -q "<svg" profile/top-langs.svg
+          curl -sL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/users/ByAruDev/repos?per_page=100" \
+            -o /tmp/repos.json
+
+          python3 <<'PY'
+          import json
+          from collections import Counter
+
+          repos = json.load(open("/tmp/repos.json"))
+          languages = Counter()
+
+          for repo in repos:
+              lang = repo.get("language")
+              if lang:
+                  languages[lang] += 1
+
+          top = languages.most_common(6)
+          total = sum(languages.values()) or 1
+
+          rows = ""
+
+          for i, (name, count) in enumerate(top):
+              percent = round(count / total * 100, 1)
+              y = 100 + i * 25
+              rows += f'<text x="30" y="{y}" fill="#c9d1d9" font-family="Arial" font-size="14">{name}</text>'
+              rows += f'<text x="300" y="{y}" fill="#58a6ff" font-family="Arial" font-size="14">{percent}%</text>'
+
+          svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="495" height="220" viewBox="0 0 495 220">
+            <rect width="495" height="220" rx="12" fill="#0d1117"/>
+            <text x="30" y="42" fill="#58a6ff" font-family="Arial" font-size="22" font-weight="bold">Top Languages</text>
+            <text x="30" y="68" fill="#8b949e" font-family="Arial" font-size="14">ByAruDev</text>
+            {rows}
+          </svg>'''
+
+          open("profile/top-langs.svg", "w").write(svg)
+          PY
 
       - name: 🔥 Generate Streak Stats
         run: |
           curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
             "https://streak-stats.demolab.com?user=ByAruDev&theme=transparent&hide_border=true&disable_animations=true" \
             -o profile/streak.svg
-          grep -q "<svg" profile/streak.svg
-
-      - name: 🏆 Generate GitHub Trophies
-        run: |
-          curl -fL --retry 5 --retry-delay 10 --retry-all-errors \
-            "https://github-profile-trophy.vercel.app/?username=ByAruDev&theme=darkhub&no-frame=true&margin-w=10&row=1" \
-            -o profile/trophies.svg
-          grep -q "<svg" profile/trophies.svg
 
       - name: 💾 Commit generated statistics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add profile/*.svg
 
           if git diff --cached --quiet; then
