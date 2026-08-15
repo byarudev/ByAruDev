@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Designed something that started as a five-minute idea.
+> ✨ Built something random instead of doing what I was supposed to do.
 
 <!-- RANDOM_STUFF_END -->
 
