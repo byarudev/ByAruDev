@@ -155,9 +155,6 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_END -->
 
-<div align="center">
-
-`⚡ RANDOMLY GENERATED` &nbsp; `🔄 AUTO-UPDATED` 
 
 </div>
 
