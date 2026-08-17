@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Designed a random poster and somehow spent way too long on it.
+> ✨ Fixed a bug that I accidentally created five minutes earlier.
 
 <!-- RANDOM_STUFF_END -->
 
