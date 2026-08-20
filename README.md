@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Started another project instead of finishing the previous one.
+> ✨ Designed a random poster and somehow spent way too long on it.
 
 <!-- RANDOM_STUFF_END -->
 
