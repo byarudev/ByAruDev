@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Designed a random poster and somehow spent way too long on it.
+> ✨ Spent way too long choosing the perfect font.
 
 <!-- RANDOM_STUFF_END -->
 
