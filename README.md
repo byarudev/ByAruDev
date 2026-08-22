@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Spent way too long choosing the perfect font.
+> ✨ Made a tiny change that somehow took an entire afternoon.
 
 <!-- RANDOM_STUFF_END -->
 
