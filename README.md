@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Made a tiny change that somehow took an entire afternoon.
+> ✨ Made a small improvement to one of my websites.
 
 <!-- RANDOM_STUFF_END -->
 
