@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Designed a UI for an idea that may or may not become a real project.
+> ✨ Improved a project by approximately 3% and celebrated anyway.
 
 <!-- RANDOM_STUFF_END -->
 
