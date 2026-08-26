@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Improved a project by approximately 3% and celebrated anyway.
+> ✨ Made a button unnecessarily satisfying to click.
 
 <!-- RANDOM_STUFF_END -->
 
