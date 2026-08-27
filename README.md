@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Made a button unnecessarily satisfying to click.
+> ✨ Opened an old project and decided it needed a complete redesign.
 
 <!-- RANDOM_STUFF_END -->
 
