@@ -143,18 +143,5 @@ Tech I work with:
 
 ---
 
-## 🎲 Random Stuff I Did
-
-> ### 💭 What have I been doing?
-> Random things. Random projects. Random ideas.
-> Sometimes productive. Sometimes questionable. Usually both.
-
-<!-- RANDOM_STUFF_START -->
-
-> ✨ Designed something that started as a five-minute idea.
-
-<!-- RANDOM_STUFF_END -->
-
-
 </div>
 
