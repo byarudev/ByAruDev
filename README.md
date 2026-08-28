@@ -151,7 +151,7 @@ Tech I work with:
 
 <!-- RANDOM_STUFF_START -->
 
-> ✨ Opened an old project and decided it needed a complete redesign.
+> ✨ Designed something that started as a five-minute idea.
 
 <!-- RANDOM_STUFF_END -->
 
